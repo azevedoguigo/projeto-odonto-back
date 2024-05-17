@@ -1,19 +1,15 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"github.com/azevedoguigo/projeto-odonto-back.git/config"
+	"github.com/azevedoguigo/projeto-odonto-back.git/models"
+	"github.com/azevedoguigo/projeto-odonto-back.git/routes"
 )
 
 func main() {
-	router := gin.Default()
+	config.InitDB()
+	models.MigrateDB(config.DB)
 
-	router.GET("/hello", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "Hello, world!",
-		})
-	})
-
+	router := routes.SetupRouter()
 	router.Run()
 }
