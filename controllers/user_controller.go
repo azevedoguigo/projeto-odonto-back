@@ -17,6 +17,12 @@ func CreateUser(c *gin.Context) {
 		})
 	}
 
+	if err := user.HashPassword(user.Password); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+	}
+
 	config.DB.Create(&user)
 	c.JSON(http.StatusCreated, user)
 }
