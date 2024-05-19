@@ -26,3 +26,17 @@ func CreateUser(c *gin.Context) {
 	config.DB.Create(&user)
 	c.JSON(http.StatusCreated, user)
 }
+
+func GetUserById(c *gin.Context) {
+	id := c.Param("id")
+
+	var user models.User
+
+	if err := config.DB.First(&user, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "User not found!",
+		})
+	}
+
+	c.JSON(http.StatusOK, user)
+}
