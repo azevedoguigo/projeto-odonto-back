@@ -10,10 +10,10 @@ func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
 	router.POST("/login", controllers.Login)
+	router.POST("/users", controllers.CreateUser)
 
 	protected := router.Group("/", middleware.AuthMiddleware())
 	{
-		protected.POST("/users", controllers.CreateUser)
 		protected.GET("/users/:id", controllers.GetUserById)
 	}
 
