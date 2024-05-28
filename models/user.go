@@ -28,6 +28,6 @@ func (user *User) CheckPassword(password string) bool {
 	return err == nil
 }
 
-func MigrateDB(db *gorm.DB) {
+func MigrateUserTable(db *gorm.DB) {
 	db.AutoMigrate(&User{})
 }
