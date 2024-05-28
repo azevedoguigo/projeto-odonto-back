@@ -8,15 +8,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreatePatient(c *gin.Context) {
+func CreatePatient(ctx *gin.Context) {
 	var patient models.Patient
 
-	if err := c.ShouldBindJSON(&patient); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+	if err := ctx.ShouldBindJSON(&patient); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
 	}
 
 	config.DB.Create(&patient)
-	c.JSON(http.StatusCreated, patient)
+	ctx.JSON(http.StatusCreated, patient)
+}
+
+func GetPatientById(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	var patient models.Patient
+
+	if err := config.DB.First(&patient, id).Error; err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"error": "Patient not found!",
+		})
+	}
+
+	ctx.JSON(http.StatusOK, patient)
 }
