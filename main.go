@@ -8,7 +8,8 @@ import (
 
 func main() {
 	config.InitDB()
-	models.MigrateDB(config.DB)
+	models.MigrateUserTable(config.DB)
+	models.MigratePatientTable(config.DB)
 
 	router := routes.SetupRouter()
 	router.Run()
