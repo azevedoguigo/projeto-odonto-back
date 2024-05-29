@@ -24,7 +24,14 @@ func CreateUser(c *gin.Context) {
 	}
 
 	config.DB.Create(&user)
-	c.JSON(http.StatusCreated, user)
+
+	userResponse := models.UserResponse{
+		Model: user.Model,
+		Name:  user.Name,
+		Email: user.Email,
+	}
+
+	c.JSON(http.StatusCreated, userResponse)
 }
 
 func GetUserById(c *gin.Context) {
@@ -38,5 +45,11 @@ func GetUserById(c *gin.Context) {
 		})
 	}
 
-	c.JSON(http.StatusOK, user)
+	userResponse := models.UserResponse{
+		Model: user.Model,
+		Name:  user.Name,
+		Email: user.Email,
+	}
+
+	c.JSON(http.StatusOK, userResponse)
 }

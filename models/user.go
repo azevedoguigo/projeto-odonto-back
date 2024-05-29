@@ -9,7 +9,13 @@ type User struct {
 	gorm.Model
 	Name     string `json:"name"`
 	Email    string `json:"email"`
-	Password string `json:"-"`
+	Password string `json:"password"`
+}
+
+type UserResponse struct {
+	gorm.Model
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 func (user *User) HashPassword(password string) error {
