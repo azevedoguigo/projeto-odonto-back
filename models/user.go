@@ -9,7 +9,13 @@ type User struct {
 	gorm.Model
 	Name     string `json:"name"`
 	Email    string `json:"email"`
-	Password string `json:"-"`
+	Password string `json:"password"`
+}
+
+type UserResponse struct {
+	gorm.Model
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 func (user *User) HashPassword(password string) error {
@@ -28,6 +34,6 @@ func (user *User) CheckPassword(password string) bool {
 	return err == nil
 }
 
-func MigrateDB(db *gorm.DB) {
+func MigrateUserTable(db *gorm.DB) {
 	db.AutoMigrate(&User{})
 }

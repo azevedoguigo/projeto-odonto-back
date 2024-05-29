@@ -9,23 +9,32 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Credentials struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 func Login(c *gin.Context) {
-	var credentials struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
-	}
+	var credentials Credentials
+
 	if err := c.ShouldBindJSON(&credentials); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": err.Error(),
 		})
-
 		return
 	}
 
 	var user models.User
 	if err := config.DB.Where("email = ?", credentials.Email).First(&user).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"error": "Invalid credentials!",
+			"error": "Invalid email!",
+		})
+		return
+	}
+
+	if !user.CheckPassword(credentials.Password) {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Invalid password!",
 		})
 		return
 	}

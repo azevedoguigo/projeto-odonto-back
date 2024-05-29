@@ -15,6 +15,9 @@ func SetupRouter() *gin.Engine {
 	protected := router.Group("/", middleware.AuthMiddleware())
 	{
 		protected.GET("/users/:id", controllers.GetUserById)
+
+		protected.POST("/patients", controllers.CreatePatient)
+		protected.GET("/patients/:id", controllers.GetPatientById)
 	}
 
 	return router

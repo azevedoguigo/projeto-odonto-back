@@ -16,9 +16,10 @@ func AuthMiddleware() gin.HandlerFunc {
 				"error": "Authorization header required!",
 			})
 			ctx.Abort()
+			return
 		}
 
-		tokenString := strings.TrimPrefix(authHeader, "Bearer")
+		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 		claims, err := utils.ValidateJWT(tokenString)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{
