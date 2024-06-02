@@ -10,6 +10,7 @@ func main() {
 	config.InitDB()
 	models.MigrateUserTable(config.DB)
 	models.MigratePatientTable(config.DB)
+	models.MigrateDentistTable(config.DB)
 
 	router := routes.SetupRouter()
 	router.Run()
