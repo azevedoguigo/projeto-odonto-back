@@ -34,3 +34,16 @@ func GetPatientById(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, patient)
 }
+
+func GetPatients(ctx *gin.Context) {
+	var patients []models.Patient
+
+	if err := config.DB.Find(&patients).Error; err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, patients)
+}
