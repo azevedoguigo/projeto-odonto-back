@@ -32,6 +32,7 @@ func SetupRouter() *gin.Engine {
 		protected.GET("/patients/:id", controllers.GetPatientById)
 
 		protected.POST("/dentists", controllers.CreateDentist)
+		protected.GET("/dentists/:id", controllers.GetDentistById)
 	}
 
 	return router

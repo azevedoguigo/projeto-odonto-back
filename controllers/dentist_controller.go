@@ -21,3 +21,17 @@ func CreateDentist(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, dentist)
 }
+
+func GetDentistById(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	var dentist models.Dentist
+
+	if err := config.DB.First(&dentist, id).Error; err != nil {
+		ctx.JSON(http.StatusNotExtended, gin.H{
+			"error": "Dentist not found!",
+		})
+	}
+
+	ctx.JSON(http.StatusOK, dentist)
+}
