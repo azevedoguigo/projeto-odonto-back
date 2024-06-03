@@ -45,3 +45,17 @@ func CreateService(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, service)
 }
+
+func GetServiceById(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	var service models.Service
+
+	if err := config.DB.First(&service, id).Error; err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"error": "Service not found!",
+		})
+	}
+
+	ctx.JSON(http.StatusOK, service)
+}
