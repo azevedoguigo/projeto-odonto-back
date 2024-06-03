@@ -59,3 +59,15 @@ func GetServiceById(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, service)
 }
+
+func GetServices(ctx *gin.Context) {
+	var services []models.Service
+
+	if err := config.DB.Find(&services).Error; err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	ctx.JSON(http.StatusOK, services)
+}
