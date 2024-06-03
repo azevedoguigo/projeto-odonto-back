@@ -6,13 +6,14 @@ import (
 
 type Patient struct {
 	gorm.Model
-	Name            string `json:"name"`
-	BirthDate       string `json:"birth-date"`
-	PhoneNumber     string `json:"phone-number"`
-	HealthInsurance string `json:"healt-insurance"`
-	Expiration      string `json:"expiration"`
-	CPF             string `json:"cpf"`
-	Address         string `json:"addres"`
+	Name            string    `json:"name"`
+	BirthDate       string    `json:"birth-date"`
+	PhoneNumber     string    `json:"phone-number"`
+	HealthInsurance string    `json:"healt-insurance"`
+	Expiration      string    `json:"expiration"`
+	CPF             string    `json:"cpf"`
+	Address         string    `json:"addres"`
+	Services        []Service `json:"services"`
 }
 
 func MigratePatientTable(db *gorm.DB) {
