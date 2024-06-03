@@ -8,13 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CreateServiceInput struct {
+type CreateOrUpdateServiceInput struct {
 	DentistId uint `json:"dentist-id"`
 	PatientId uint `json:"patient-id"`
 }
 
 func CreateService(ctx *gin.Context) {
-	var input CreateServiceInput
+	var input CreateOrUpdateServiceInput
 	var dentist models.Dentist
 	var patient models.Patient
 
@@ -70,4 +70,28 @@ func GetServices(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, services)
+}
+
+func UpdateService(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	var service models.Service
+
+	if err := config.DB.First(&service, id).Error; err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"error": "Service not found!",
+		})
+		return
+	}
+
+	if err := ctx.ShouldBindJSON(&service); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	config.DB.Save(&service)
+
+	ctx.JSON(http.StatusOK, service)
 }
