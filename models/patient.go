@@ -15,7 +15,3 @@ type Patient struct {
 	Address         string    `json:"addres"`
 	Services        []Service `json:"services"`
 }
-
-func MigratePatientTable(db *gorm.DB) {
-	db.AutoMigrate(&Patient{})
-}

@@ -9,7 +9,3 @@ type Dentist struct {
 	CPF     string    `json:"cpf"`
 	Service []Service `json:"services"`
 }
-
-func MigrateDentistTable(db *gorm.DB) {
-	db.AutoMigrate(&Dentist{})
-}
