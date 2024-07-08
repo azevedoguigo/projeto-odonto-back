@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"os"
 
 	"github.com/azevedoguigo/projeto-odonto-back.git/models"
 	"gorm.io/driver/postgres"
@@ -11,7 +12,7 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-	dsn := "host=localhost user=postgres password=postgres dbname=projeto_odonto port=5432 sslmode=disable TimeZone=America/Maceio"
+	dsn := "host=" + os.Getenv("DB_HOST") + " user=" + os.Getenv("DB_USER") + " password=" + os.Getenv("DB_PASSWORD") + " dbname=" + os.Getenv("DB_NAME") + " port=5432 sslmode=disable TimeZone=America/Maceio"
 
 	var err error
 
